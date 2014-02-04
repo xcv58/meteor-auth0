@@ -10,7 +10,7 @@ Oauth.registerService('auth0', 2, null, function (query) {
       accessToken: accessToken,
       id: user.user_id,
       email: user.email,
-      name: user.name
+      name: user.name || user.email
     },
     options: {
       profile: {
@@ -20,19 +20,13 @@ Oauth.registerService('auth0', 2, null, function (query) {
   };
 });
 
-// configuration
-var config = ServiceConfiguration.configurations.findOne({ service: 'auth0' });
-if (!config) {
-  throw new ServiceConfiguration.ConfigError('Service not configured.');
-}
-
-// user agent
 var userAgent = 'Meteor';
 if (Meteor.release) {
   userAgent += '/' + Meteor.release;
 }
 
 var getAccessToken = function (query) {
+  var config = getConfiguration();
   var response;
   try {
 
@@ -65,6 +59,7 @@ var getAccessToken = function (query) {
 };
 
 var getUserProfile = function (accessToken) {
+  var config = getConfiguration();
   var response;
   try {
     response = HTTP.get(
@@ -83,6 +78,14 @@ var getUserProfile = function (accessToken) {
   }
 
   return response.data;
+};
+
+var getConfiguration = function () {
+  var config = ServiceConfiguration.configurations.findOne({ service: 'auth0' });
+  if (!config) {
+    throw new ServiceConfiguration.ConfigError('Service not configured.');
+  }
+  return config;
 };
 
 Auth0.retrieveCredential = function(credentialToken) {
