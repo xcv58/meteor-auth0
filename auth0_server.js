@@ -2,19 +2,24 @@ Auth0 = {};
 
 Oauth.registerService('auth0', 2, null, function (query) {
 
-  var accessToken = getAccessToken(query);
-  var user = getUserProfile(accessToken);
+  var tokens = getTokens(query);
+  var user = getUserProfile(tokens.access_token);
+
+  var username = user.name || user.email;
+  var serviceData = {
+    id:           user.user_id,
+    accessToken:  tokens.access_token,
+    id_token:     tokens.id_token,
+    name:         username
+  };
+
+  _.extend(serviceData, user);
 
   return {
-    serviceData: {
-      accessToken: accessToken,
-      id: user.user_id,
-      email: user.email,
-      name: user.name || user.email
-    },
+    serviceData: serviceData,
     options: {
       profile: {
-        name: user.name
+        name: username
       }
     }
   };
@@ -25,7 +30,7 @@ if (Meteor.release) {
   userAgent += '/' + Meteor.release;
 }
 
-var getAccessToken = function (query) {
+var getTokens = function (query) {
   var config = getConfiguration();
   var response;
   try {
@@ -55,7 +60,7 @@ var getAccessToken = function (query) {
     throw new Error('Failed to complete OAuth handshake with Auth0. ' + response.data.error);
   } 
   
-  return response.data.access_token;
+  return response.data;
 };
 
 var getUserProfile = function (accessToken) {
@@ -85,6 +90,7 @@ var getConfiguration = function () {
   if (!config) {
     throw new ServiceConfiguration.ConfigError('Service not configured.');
   }
+
   return config;
 };
 
