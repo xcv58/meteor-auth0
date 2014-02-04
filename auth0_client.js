@@ -25,9 +25,9 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
     'https://d19p4zemcycm7a.cloudfront.net/w2/auth0-widget-2.4.min.js',
     function () {
       var widget = new Auth0Widget({
-        domain:      'iaco82.auth0.com',
-        clientID:    'fbNJQpjbtUCmesa0dUaigrUhVsWqNkxn',
-        callbackURL: 'http://localhost:3000/_oauth/auth0',
+        domain:      config.domain,
+        clientID:    config.clientId,
+        callbackURL: Meteor.absoluteUrl('_oauth/auth0')
       });
 
       widget.signin({ extraParameters: { state: state } }, callback);
