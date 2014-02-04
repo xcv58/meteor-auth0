@@ -19,26 +19,17 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
     return;
   }
 
-  var state = Random.id();
+  options = options || {};
+  options.response_type = options.response_type || 'code';
+  options.client_id = config.clientId;
+  options.redirect_uri = Meteor.absoluteUrl('_oauth/auth0?close');
+  options.state = Random.id();
 
-  /*Meteor.Loader.loadJs(
-    'https://d19p4zemcycm7a.cloudfront.net/w2/auth0-widget-2.4.min.js',
-    function () {
-      var widget = new Auth0Widget({
-        domain:      config.domain,
-        clientID:    config.clientId,
-        callbackURL: Meteor.absoluteUrl('_oauth/auth0?redirect=' + Meteor.absoluteUrl())
-      });
+  var loginUrl = 'https://' + config.domain + '/authorize?';
 
-      widget.signin({ extraParameters: { state: state } });
-    });*/
+  for (var k in options) {
+    loginUrl += '&' + k + '=' + options[k];
+  }
 
-  var loginUrl =
-    'https://' + config.domain + '/authorize' +
-    '?client=' + config.clientId +
-    '&response_type=code' +
-    '&redirect_uri=' + Meteor.absoluteUrl('_oauth/auth0?close') +
-    '&state=' + state;
-
-  Oauth.initiateLogin(state, loginUrl, credentialRequestCompleteCallback, { width: 320, height: 450 });
+  Oauth.initiateLogin(options.state, loginUrl, credentialRequestCompleteCallback, { width: 320, height: 450 });
 };
