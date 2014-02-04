@@ -1,0 +1,8 @@
+{
+	"name": "auth0",
+	"description": "Auht0 login flow",
+	"homepage": "https://github.com/auth0/meteor-auth0",
+	"author": "Auth0 <support@auth0.com>",
+	"version": "0.0.1",
+	"git": "https://github.com/auth0/meteor-auth0.git"
+}
