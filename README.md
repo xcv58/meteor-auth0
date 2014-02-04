@@ -3,7 +3,7 @@ meteor-auth0
 Handles the OAuth flow (in conjunction with [accounts-auth0](https://atmosphere.meteor.com/package/accounts-auth0)).
 
 ### Credits
-Closely based on the [foursquare package](https://atmosphere.meteor.com/package/foursquare).
+Closely based on the [github package](https://github.com/meteor/meteor/tree/master/packages/github).
 
 ### License
 The MIT License (MIT)
