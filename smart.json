@@ -1,0 +1,11 @@
+{
+	"name": "auth0",
+	"description": "Auth0 Login Flow for Meteor apps",
+	"homepage": "https://github.com/auth0/meteor-auth0",
+	"author": "Auth0 <support@auth0.com>",
+	"version": "0.0.1",
+	"git": "https://github.com/auth0/meteor-auth0.git",
+	"packages": {
+    	"external-file-loader": "0.1.4"
+  	}
+}

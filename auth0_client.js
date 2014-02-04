@@ -21,17 +21,24 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
 
   var state = Random.id();
 
-  Meteor.Loader.loadJs(
+  /*Meteor.Loader.loadJs(
     'https://d19p4zemcycm7a.cloudfront.net/w2/auth0-widget-2.4.min.js',
     function () {
       var widget = new Auth0Widget({
         domain:      config.domain,
         clientID:    config.clientId,
-        callbackURL: Meteor.absoluteUrl('_oauth/auth0')
+        callbackURL: Meteor.absoluteUrl('_oauth/auth0?close')
       });
 
-      widget.signin({ extraParameters: { state: state } }, callback);
-    });
+      widget.signin({ extraParameters: { state: state } });
+    });*/
 
-  //Oauth.initiateLogin(state, loginUrl, credentialRequestCompleteCallback, { width: 900, height: 450 });
+  var loginUrl =
+    'https://' + config.domain + '/authorize' +
+    '?client=' + config.clientId +
+    '&response_type=code' +
+    '&redirect_uri=' + Meteor.absoluteUrl('_oauth/auth0?close') +
+    '&state=' + state;
+
+  Oauth.initiateLogin(state, loginUrl, credentialRequestCompleteCallback, { width: 600, height: 500 });
 };

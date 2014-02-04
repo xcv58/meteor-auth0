@@ -3,36 +3,42 @@ Auth0 = {};
 Oauth.registerService('auth0', 2, null, function (query) {
 
   var accessToken = getAccessToken(query);
-  var identity = getIdentity(accessToken);
+  var user = getUserProfile(accessToken);
+
+  console.log(user);
+  console.log(accessToken);
 
   return {
     serviceData: {
-      id:           identity.id,
+      id:           user.user_id,
       accessToken:  accessToken,
-      email:        identity.contact.email
+      email:        user.email
     },
     options: {
       profile: {
-        firstName: identity.firstName,
-        lastName: identity.lastName
+        firstName: user.given_name,
+        lastName: user.family_name
       }
     }
   };
 });
 
+// configuration
+var config = ServiceConfiguration.configurations.findOne({ service: 'auth0' });
+if (!config) {
+  throw new ServiceConfiguration.ConfigError('Service not configured.');
+}
+
+// user agent
 var userAgent = 'Meteor';
 if (Meteor.release) {
   userAgent += '/' + Meteor.release;
 }
 
 var getAccessToken = function (query) {
-  var config = ServiceConfiguration.configurations.findOne({ service: 'auth0' });
-  if (!config) {
-    throw new ServiceConfiguration.ConfigError('Service not configured.');
-  }
-
   var response;
   try {
+
     response = HTTP.post(
       'https://' + config.domain + '/oauth/token', {
         headers: {
@@ -41,9 +47,9 @@ var getAccessToken = function (query) {
         },
         params: {
           code:           query.code,
-          state:          query.state,
+          //state:          query.state,
           client_id:      config.clientId,
-          client_secret:  config.secret,
+          client_secret:  config.clientSecret,
           grant_type:     'authorization_code',
           redirect_uri:   Meteor.absoluteUrl('_oauth/auth0')
         }
@@ -57,27 +63,30 @@ var getAccessToken = function (query) {
   if (response.data.error) { // if the http response was a json object with an error attribute
     throw new Error('Failed to complete OAuth handshake with Auth0. ' + response.data.error);
   } 
-  else {
-    return response.data.access_token;
-  }
+  
+  return response.data.access_token;
 };
 
-var getIdentity = function (accessToken) {
+var getUserProfile = function (accessToken) {
+  var response;
   try {
-    return HTTP.get(
+    response = HTTP.get(
       'https://' + config.domain + '/userinfo', {
-        headers: { 
+        headers: {
+          Accept: 'application/json',
           'User-Agent': userAgent 
         },
         params: {
           access_token: accessToken
         }
-      }).data.response.user;
+      });
   }
   catch (err) {
     throw _.extend(
-      new Error('Failed to fetch identity from Auth0. ' + err.message), { response: err.response });
+      new Error('Failed to fetch user profile from Auth0. ' + err.message), { response: err.response });
   }
+
+  return response.data;
 };
 
 Auth0.retrieveCredential = function(credentialToken) {
