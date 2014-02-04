@@ -31,5 +31,11 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
     loginUrl += '&' + k + '=' + options[k];
   }
 
-  Oauth.initiateLogin(options.state, loginUrl, credentialRequestCompleteCallback, { width: 320, height: 450 });
+  options.popupOptions = options.popupOptions || {};
+  var popupOptions = { 
+    width:  options.popupOptions.width || 320, 
+    height: options.popupOptions.height || 450
+  };
+
+  Oauth.initiateLogin(options.state, loginUrl, credentialRequestCompleteCallback, popupOptions);
 };
