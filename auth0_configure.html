@@ -1,10 +1,10 @@
 <template name="configureLoginServiceDialogForAuth0">
   <p>
-    First, you'll need to get an Auth0 Client. Follow these steps:
+    First, you'll need to create an Auth0 application. Follow these steps:
   </p>
   <ol>
     <li>
-      Create an application from <a href="https://app.auth0.com/#/applications/create" target="_blank">https://app.auth0.com/#/applications/create</a>
+      Create an <b>OpenID Connect (OAuth2) Web</b> application from <a href="https://app.auth0.com/#/applications/create" target="_blank">https://app.auth0.com/#/applications/create</a>
     </li>
     <li>
       Set App Callbacks URLs to: <span class="url">{{siteUrl}}_oauth/auth0</span>

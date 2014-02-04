@@ -11,7 +11,6 @@ Package.on_use(function(api) {
   api.use('templating', 'client');
   api.use('random', 'client');
   api.use('service-configuration', ['client', 'server']);
-  api.use('external-file-loader', 'client');
 
   api.export('Auth0');
 
