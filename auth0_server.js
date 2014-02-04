@@ -5,19 +5,16 @@ Oauth.registerService('auth0', 2, null, function (query) {
   var accessToken = getAccessToken(query);
   var user = getUserProfile(accessToken);
 
-  console.log(user);
-  console.log(accessToken);
-
   return {
     serviceData: {
-      id:           user.user_id,
-      accessToken:  accessToken,
-      email:        user.email
+      accessToken: accessToken,
+      id: user.user_id,
+      email: user.email,
+      name: user.name
     },
     options: {
       profile: {
-        firstName: user.given_name,
-        lastName: user.family_name
+        name: user.name
       }
     }
   };
@@ -73,7 +70,6 @@ var getUserProfile = function (accessToken) {
     response = HTTP.get(
       'https://' + config.domain + '/userinfo', {
         headers: {
-          Accept: 'application/json',
           'User-Agent': userAgent 
         },
         params: {

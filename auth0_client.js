@@ -27,7 +27,7 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
       var widget = new Auth0Widget({
         domain:      config.domain,
         clientID:    config.clientId,
-        callbackURL: Meteor.absoluteUrl('_oauth/auth0?close')
+        callbackURL: Meteor.absoluteUrl('_oauth/auth0?redirect=' + Meteor.absoluteUrl())
       });
 
       widget.signin({ extraParameters: { state: state } });
@@ -40,5 +40,5 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
     '&redirect_uri=' + Meteor.absoluteUrl('_oauth/auth0?close') +
     '&state=' + state;
 
-  Oauth.initiateLogin(state, loginUrl, credentialRequestCompleteCallback, { width: 600, height: 500 });
+  Oauth.initiateLogin(state, loginUrl, credentialRequestCompleteCallback, { width: 320, height: 450 });
 };
