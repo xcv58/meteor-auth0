@@ -3,6 +3,6 @@
 	"description": "Auht0 OAuth login flow",
 	"homepage": "https://github.com/auth0/meteor-auth0",
 	"author": "Auth0 <support@auth0.com>",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"git": "https://github.com/auth0/meteor-auth0.git"
 }
