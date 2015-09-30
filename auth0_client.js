@@ -10,32 +10,51 @@ Auth0.requestCredential = function (options, credentialRequestCompleteCallback) 
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
     credentialRequestCompleteCallback = options;
     options = {};
+  } else if (!options) {
+    options = {};
   }
 
   var config = ServiceConfiguration.configurations.findOne({ service: 'auth0' });
 
   if (!config) {
-    credentialRequestCompleteCallback(new ServiceConfiguration.ConfigError('Service not configured.'));
+    credentialRequestCompleteCallback && credentialRequestCompleteCallback(
+      new ServiceConfiguration.ConfigError());
     return;
   }
 
-  options = options || {};
-  options.response_type = options.response_type || 'code';
-  options.client_id = config.clientId;
-  options.redirect_uri = Meteor.absoluteUrl('_oauth/auth0?close');
-  options.state = Random.id();
+  var credentialToken = Random.secret();
 
-  var loginUrl = 'https://' + config.domain + '/authorize?';
-
-  for (var k in options) {
-    loginUrl += '&' + k + '=' + options[k];
+  var loginUrlParameters = {};
+  
+  if (config.loginUrlParameters){
+    _.extend(loginUrlParameters, config.loginUrlParameters)
   }
 
-  options.popupOptions = options.popupOptions || {};
-  var popupOptions = { 
-    width:  options.popupOptions.width || 320, 
-    height: options.popupOptions.height || 450
-  };
+  if (options.loginUrlParameters){
+    _.extend(loginUrlParameters, options.loginUrlParameters)
+  }
 
-  Oauth.initiateLogin(options.state, loginUrl, credentialRequestCompleteCallback, popupOptions);
+  var popupOptions = options.popupOptions || {};
+
+  var loginStyle = OAuth._loginStyle('auth0', config, options);
+  // https://developers.google.com/accounts/docs/OAuth2WebServer#formingtheurl
+  _.extend(loginUrlParameters, {
+    "response_type": "code",
+    "client_id":  config.clientId,
+    "redirect_uri": OAuth._redirectUri('auth0', config),
+    "state": OAuth._stateParam(loginStyle, credentialToken, options.redirectUrl)
+  });
+  var loginUrl = 'https://' + config.domain + '/authorize?' +
+    _.map(loginUrlParameters, function(value, param){
+      return encodeURIComponent(param) + '=' + encodeURIComponent(value);
+    }).join("&");
+
+  OAuth.launchLogin({
+    loginService: "auth0",
+    loginStyle: loginStyle,
+    loginUrl: loginUrl,
+    credentialRequestCompleteCallback: credentialRequestCompleteCallback,
+    credentialToken: credentialToken,
+    popupOptions: { height:  popupOptions.height || 450, width: popupOptions.width || 320}
+  });
 };
