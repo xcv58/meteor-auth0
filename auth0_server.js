@@ -43,11 +43,10 @@ var getTokens = function (query) {
         },
         params: {
           code:           query.code,
-          //state:          query.state,
           client_id:      config.clientId,
-          client_secret:  config.clientSecret,
-          grant_type:     'authorization_code',
-          redirect_uri:   Meteor.absoluteUrl('_oauth/auth0')
+          client_secret:  OAuth.openSecret(config.clientSecret),
+          redirect_uri:   OAuth._redirectUri('google', config),
+          grant_type:     'authorization_code'
         }
       });
   }
@@ -94,6 +93,6 @@ var getConfiguration = function () {
   return config;
 };
 
-Auth0.retrieveCredential = function(credentialToken) {
-  return Oauth.retrieveCredential(credentialToken);
+Auth0.retrieveCredential = function(credentialToken, credentialSecret) {
+  return Oauth.retrieveCredential(credentialToken, credentialSecret);
 };
