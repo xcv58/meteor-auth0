@@ -12,7 +12,7 @@ git clone https://github.com/auth0/meteor-auth0.git
 > update settings.json with your auth0 Domain, Client ID and Client Secret.
 
 ~~~
-cd meteor-auth0
+cd meteor-auth0-master
 meteor
 ~~~
 
