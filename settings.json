@@ -1,0 +1,5 @@
+{
+  "Auth0Domain": "yourAuth0domain",
+  "Auth0ClientID": "yourAuth0clientID",
+  "Auth0ClientSecret": "yourAuth0clientSecret",
+}

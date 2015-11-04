@@ -1,21 +1,22 @@
 meteor-auth0
-============
-Handles the OAuth flow (in conjunction with [accounts-auth0](https://atmosphere.meteor.com/package/accounts-auth0)).
+============================
+
+Meteor's sample (TODO APP) using Auth0 as external login service
+
+### Usage
+
+~~~
+git clone https://github.com/auth0/meteor-auth0.git
+~~~
+
+> update settings.json with your auth0 Domain, Client ID and Client Secret.
+
+~~~
+cd meteor-auth0
+meteor
+~~~
+
+
 
 ### Credits
-Closely based on the [github package](https://github.com/meteor/meteor/tree/master/packages/github).
-
-### License
-The MIT License (MIT)
-
-Copyright (c) 2014 AUTH10 LLC
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Issue Reporting
-
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+Original sample made following Meteor's TODO App tutorial. (https://www.meteor.com/tutorials/blaze/creating-an-app)
