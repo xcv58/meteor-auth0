@@ -12,6 +12,7 @@ git clone https://github.com/auth0/meteor-auth0.git
 ~~~
 
 > update settings.json with your auth0 Domain, Client ID and Client Secret.
+
 > add http://localhost:3000/_oauth/auth0 to your Auth0 Allowed Callback URLs.
 
 ~~~
