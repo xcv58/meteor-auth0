@@ -1,0 +1,18 @@
+<head>
+  <title>auth0-lock-sample</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor with Auth0 Lock!</h1>
+
+  {{> hello}}
+</body>
+
+<template name="hello">
+  {{#if currentUser}}
+    <div>Your name is: <b>{{currentUser.services.auth0.name}}</b></div>
+    <button class="logout">Log Out</button>
+  {{else}}
+    <button class="login">Log In</button>
+  {{/if}}
+</template>

@@ -1,5 +1,0 @@
-{
-  "Auth0Domain": {DOMAIN},
-  "Auth0ClientID": {CLIENT_ID},
-  "Auth0ClientSecret": {CLIENT_SECRET},
-}
