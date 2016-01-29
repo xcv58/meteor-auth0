@@ -1,6 +1,6 @@
 if (Meteor.isClient) {
-    this.lock = {};
-    self      = this;
+    Meteor.lock = {};
+    self      = Meteor;
     Meteor.startup(function () {
         Meteor.call('getAuth0Attributes', function (error, res) {
             // Instantiate lock as soon as the getAuth0Attributes Meteor method
@@ -60,25 +60,25 @@ if (Meteor.isClient) {
     };
 
     // Adds our callback wrapper to the arguments array
-    function _addAccountsCallback(arguments) {
-        if (arguments.length === 0) {
+    function _addAccountsCallback(args) {
+        if (args.length === 0) {
             // No options or a callback
-            [].push.call(arguments, _getCallbackWrapper());
-        } else if (arguments.length === 1) {
+            [].push.call(args, _getCallbackWrapper());
+        } else if (args.length === 1) {
             // Just one argument. Could be an options object or a callback function.
-            if (_.isFunction(arguments[0])) {
+            if (_.isFunction(args[0])) {
                 // It's a function. Gets replaced with our callback wrapper.
-                arguments[0] = _getCallbackWrapper(arguments[0]);
+                args[0] = _getCallbackWrapper(args[0]);
             } else {
                 // It's not a function. Our callback wrapper is added to the arguments array.
-                [].push.call(arguments, _getCallbackWrapper());
+                [].push.call(args, _getCallbackWrapper());
             }
-        } else if (arguments.length > 1) {
+        } else if (args.length > 1) {
             // More than one argument. Usual case when an options object and a callback is passed to show()
-            for (var i = 0; i++; i < arguments.length) {
-                if (_.isFunction(arguments[i])) {
+            for (var i = 0; i++; i < args.length) {
+                if (_.isFunction(args[i])) {
                     // We found the callback function. Gets replaced with our callback wrapper and we are done.
-                    arguments[i] = _getCallbackWrapper(arguments[i]);
+                    args[i] = _getCallbackWrapper(args[i]);
                     break;
                 }
             }
