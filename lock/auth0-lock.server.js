@@ -30,12 +30,12 @@ if (Meteor.isServer) {
         if (!options.auth0.profile || !options.auth0.profile.user_id)
             return null;
 
-        // Accounts.updateOrCreateUserFromExternalService 
+        // Accounts.updateOrCreateUserFromExternalService
         // expects the unique user id to be stored in the 'id'
         // property of serviceData.
         options.auth0.profile.id = options.auth0.profile.user_id;
 
-        // Run the Accounts method to store the profile and 
+        // Run the Accounts method to store the profile and
         // optional data (token) in Meteor users collection.
         return Accounts.updateOrCreateUserFromExternalService("auth0", options.auth0.profile, options.auth0.token);
     });
@@ -55,9 +55,11 @@ if (Meteor.isServer) {
         // Sends the Auth0 account attributes to the client upon request.
         // Gets called from the Meteor.startup function on the client.
         'getAuth0Attributes': function () {
+          var AUTH0_CLIENTID = process.env.AUTH0_CLIENT_ID || Meteor.settings.AUTH0_CLIENT_ID;
+          var AUTH0_DOMAIN = process.env.AUTH0_DOMAIN || Meteor.settings.AUTH0_DOMAIN;
             return {
-                AUTH0_CLIENTID: process.env.AUTH0_CLIENT_ID,
-                AUTH0_DOMAIN  : process.env.AUTH0_DOMAIN
+                AUTH0_CLIENTID: AUTH0_CLIENTID,
+                AUTH0_DOMAIN  : AUTH0_DOMAIN
             };
         }
     });
