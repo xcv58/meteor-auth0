@@ -9,7 +9,12 @@ if (Meteor.isServer) {
     };
 
     // Load the .env file
-    Npm.require('dotenv').load({path: _getAppPath() + '.env'});
+    var envPath = _getAppPath() + '.env';
+    Npm.require('fs').exists(envPath, function(res) {
+      if (res) {
+        Npm.require('dotenv').load({path: envPath});
+      }
+    });
 
     // Register the Auth0 login handler for Meteor.
     Accounts.registerLoginHandler(function (options) {
