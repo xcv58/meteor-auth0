@@ -5,6 +5,9 @@ if (Meteor.isClient) {
         Meteor.call('getAuth0Attributes', function (error, res) {
             // Instantiate lock as soon as the getAuth0Attributes Meteor method
             // returns.
+            if (!res.AUTH0_CLIENTID || !res.AUTH0_DOMAIN) {
+              return;
+            }
             self.lock = new _Auth0Lock(res.AUTH0_CLIENTID, res.AUTH0_DOMAIN);
 
 
