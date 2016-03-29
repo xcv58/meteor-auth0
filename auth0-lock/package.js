@@ -1,6 +1,6 @@
 Package.describe({
   name: 'xcv58:auth0-lock',
-  version: '6.0.0',
+  version: '0.4.0',
   summary: 'Auth0 Lock for Meteor',
   git: 'https://github.com/xcv58/meteor-auth0.git',
   documentation: 'README.md',
