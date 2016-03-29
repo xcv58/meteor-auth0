@@ -20,7 +20,7 @@ Lock makes it easy to integrate SSO in your app. You won't have to worry about:
 
 ## Requirements
 
-You'll need Meteor **1.2.1**, so please run `meteor update` in your project folder.
+You'll need Meteor **1.2.1**.
 
 ## Install
 
@@ -32,10 +32,14 @@ meteor add auth0:lock
 
 ## Before Getting Started
 
-Create a file named `.env` in your project folder. This file should have your Auth0 ClientId and Domain that you can get from [our dashboard](https://app.auth0.com/#/applications).
+Create a file named `settings.json` in your project folder. This file should have your Auth0 ClientId and Domain that you can get from [our dashboard](https://app.auth0.com/#/applications).
 ```js
-AUTH0_CLIENT_ID=YOUR_CLIENT_ID
-AUTH0_DOMAIN=YOUR_DOMAIN
+{
+  "private": {
+    "AUTH0_CLIENT_ID": "YOUR_CLIENT_ID",
+    "AUTH0_DOMAIN": "YOUR_AUTH0_DOMAIN"
+  }
+}
 ```
 Please remember to replace the respective values.
 
@@ -96,7 +100,7 @@ You can find the full documentation for Lock on the [Auth0 docs site](https://au
 
 The **example/auth0-meteor-sample** directory has a ready-to-go app. In order to run it you need [Meteor](https://www.meteor.com/) installed.
 
-Then execute `meteor` from the root of this project.
+Then execute `meteor --settings settings.json` from the root of this project.
 
 Finally, point your browser at `http://localhost:3000/` and play around.
 
