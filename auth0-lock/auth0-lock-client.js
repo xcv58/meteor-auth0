@@ -12,6 +12,7 @@ if (AUTH0_CLIENT_ID && AUTH0_DOMAIN) {
   Lock = new Auth0Lock(
     AUTH0_CLIENT_ID, AUTH0_DOMAIN, {
       auth: { redirect: false },
+      avatar: null,
       autoclose: true,
     }, (err, res) => {
       if (err) {
