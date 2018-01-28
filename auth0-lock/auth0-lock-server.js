@@ -1,11 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
+import { AuthenticationClient } from 'auth0';
+
+const { AUTH0_CLIENT_ID, AUTH0_DOMAIN } = Meteor.settings.public;
+
+const auth0Client = new AuthenticationClient({
+  domain: AUTH0_DOMAIN,
+  clientId: AUTH0_CLIENT_ID,
+});
 
 import './auth0-lock-common';
 
-export const loginHandler = (options) => {
-  if (!options.auth0) {
+export const loginHandler = (options = {}) => {
+  const { auth0 } = options;
+  if (!auth0) {
     // Do not handle
     return undefined;
   }
@@ -21,22 +30,26 @@ export const loginHandler = (options) => {
     };
   }
 
+  const { accessToken } = auth0;
   // Do nothing if the profile is not received.
-  if (!options.auth0.profile || !options.auth0.profile.sub) {
+  if (!accessToken) {
     return null;
   }
-
-  // Accounts.updateOrCreateUserFromExternalService
-  // expects the unique user id to be stored in the 'id'
-  // property of serviceData.
-  const { profile } = options.auth0;
-  profile.id = profile.sub;
-
-  // Run the Accounts method to store the profile and
-  // optional data (token) in Meteor users collection.
-  return Accounts.updateOrCreateUserFromExternalService(
-    'auth0', options.auth0.profile, options.auth0.token
-  );
+  const getProfile = Meteor.wrapAsync(auth0Client.getProfile, auth0Client);
+  try {
+    const profile = getProfile(accessToken);
+    // Accounts.updateOrCreateUserFromExternalService
+    // expects the unique user id to be stored in the 'id'
+    // property of serviceData.
+    return Accounts.updateOrCreateUserFromExternalService(
+      'auth0', Object.assign(profile, { id: profile.sub }), auth0
+    );
+  } catch (err) {
+    throw Object.assign(
+      new Error(`Failed to complete OAuth handshake with Auth0. ${err.message}`),
+      { response: err.response }
+    );
+  }
 };
 
 Accounts.registerLoginHandler(loginHandler);

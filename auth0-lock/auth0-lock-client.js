@@ -22,16 +22,12 @@ export const initLock = (options = {}) => {
   }, options);
 
   const Lock = new Auth0Lock(
-    AUTH0_CLIENT_ID, AUTH0_DOMAIN, finalOptions, (err, res) => {
+    AUTH0_CLIENT_ID, AUTH0_DOMAIN, finalOptions, (err, auth0) => {
       if (err) {
         // TODO: handle error
+        throw new Meteor.Error(`Auth0Lock error: ${err}`);
       } else {
-        const { accessToken, profile } = res;
-        Accounts.callLoginMethod({
-          methodArguments: [{
-            auth0: { profile, token: accessToken },
-          }],
-        });
+        Accounts.callLoginMethod({ methodArguments: [{ auth0 }] });
       }
     }
   );
@@ -45,19 +41,8 @@ export const initLock = (options = {}) => {
     });
   });
 
-  Lock.on('authenticated', (authResult) => {
-    const { accessToken } = authResult;
-    Lock.getUserInfo(authResult.accessToken, (error, profile) => {
-      // Login is redirect. Profile should be handled here.
-      if (error) {
-        // TODO: handle error
-        console.error('There was an error logging in... ', error);
-        return;
-      }
-
-      const auth0 = { profile, token: accessToken };
-      Accounts.callLoginMethod({ methodArguments: [{ auth0 }] });
-    });
+  Lock.on('authenticated', (auth0) => {
+    Accounts.callLoginMethod({ methodArguments: [{ auth0 }] });
   });
 
   Lock.logout = () => {
