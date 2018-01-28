@@ -1,12 +1,13 @@
 Package.describe({
   name: 'xcv58:auth0-lock',
-  version: '7.0.1',
+  version: '7.1.0',
   summary: 'Auth0 Lock for Meteor',
   git: 'https://github.com/xcv58/meteor-auth0.git',
   documentation: 'README.md',
 });
 
 Npm.depends({
+  'auth0': '2.9.1',
   'events': '1.1.1',
   'util': '0.10.3',
   'auth0-lock': '11.1.2',

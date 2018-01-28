@@ -5,8 +5,16 @@
 <body>
   <h1>Welcome to Meteor with Auth0 Lock!</h1>
 
-  {{> hello}}
+  {{> loggingIn}}
 </body>
+
+<template name="loggingIn">
+  {{#if loggingIn }}
+    <div>Logging In...</div>
+  {{else}}
+    {{> hello}}
+  {{/if}}
+</template>
 
 <template name="hello">
   {{#if currentUser}}
