@@ -22,7 +22,7 @@ export const loginHandler = (options) => {
   }
 
   // Do nothing if the profile is not received.
-  if (!options.auth0.profile || !options.auth0.profile.user_id) {
+  if (!options.auth0.profile || !options.auth0.profile.sub) {
     return null;
   }
 
@@ -30,7 +30,7 @@ export const loginHandler = (options) => {
   // expects the unique user id to be stored in the 'id'
   // property of serviceData.
   const { profile } = options.auth0;
-  profile.id = profile.user_id;
+  profile.id = profile.sub;
 
   // Run the Accounts method to store the profile and
   // optional data (token) in Meteor users collection.

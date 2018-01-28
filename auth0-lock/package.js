@@ -1,19 +1,19 @@
 Package.describe({
   name: 'xcv58:auth0-lock',
-  version: '6.0.2',
+  version: '7.0.0',
   summary: 'Auth0 Lock for Meteor',
   git: 'https://github.com/xcv58/meteor-auth0.git',
   documentation: 'README.md',
 });
 
 Npm.depends({
-  'events': '1.1.0',
+  'events': '1.1.1',
   'util': '0.10.3',
-  'auth0-lock': '10.0.0-beta.1',
+  'auth0-lock': '11.1.2',
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.3');
+  api.versionsFrom('1.6.1');
   api.use(['ecmascript', 'accounts-base', 'accounts-oauth', 'underscore']);
   api.mainModule('auth0-lock-server.js', 'server');
   api.mainModule('auth0-lock-client.js', 'client');
