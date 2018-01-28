@@ -19,7 +19,7 @@ export const initLock = (options = {}) => {
     allowAutocomplete: true,
     closable: false,
     loginAfterSignUp: true,
-  }, options)
+  }, options);
 
   const Lock = new Auth0Lock(
     AUTH0_CLIENT_ID, AUTH0_DOMAIN, finalOptions, (err, res) => {
@@ -36,12 +36,12 @@ export const initLock = (options = {}) => {
     }
   );
 
-  Lock.on('authorization_error', function(error) {
+  Lock.on('authorization_error', (error) => {
     Lock.show({
       flashMessage: {
         type: 'error',
-        text: error.error_description
-      }
+        text: error.error_description,
+      },
     });
   });
 
@@ -51,7 +51,7 @@ export const initLock = (options = {}) => {
       // Login is redirect. Profile should be handled here.
       if (error) {
         // TODO: handle error
-        console.error("There was an error logging in... ", error);
+        console.error('There was an error logging in... ', error);
         return;
       }
 
@@ -65,6 +65,6 @@ export const initLock = (options = {}) => {
   };
 
   return Lock;
-}
+};
 
 export const Lock = initLock();
