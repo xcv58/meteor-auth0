@@ -6,20 +6,23 @@ import './auth0-lock-common';
 
 const { AUTH0_CLIENT_ID, AUTH0_DOMAIN } = Meteor.settings.public;
 
-let Lock = null;
+export const initLock = (options = {}) => {
+  if (!AUTH0_CLIENT_ID || !AUTH0_DOMAIN) {
+    throw new Meteor.Error('No AUTH0_CLIENT_ID or AUTH0_DOMAIN!');
+  }
+  const finalOptions = Object.assign({
+    auth: {
+      redirect: true,
+    },
+    avatar: null,
+    autoclose: true,
+    allowAutocomplete: true,
+    closable: false,
+    loginAfterSignUp: true,
+  }, options)
 
-if (AUTH0_CLIENT_ID && AUTH0_DOMAIN) {
-  // TODO: let user define the options
-  Lock = new Auth0Lock(
-    AUTH0_CLIENT_ID, AUTH0_DOMAIN, {
-      auth: {
-        redirect: true,
-      },
-      avatar: null,
-      autoclose: true,
-      allowAutocomplete: true,
-      closable: false,
-    }, (err, res) => {
+  const Lock = new Auth0Lock(
+    AUTH0_CLIENT_ID, AUTH0_DOMAIN, finalOptions, (err, res) => {
       if (err) {
         // TODO: handle error
       } else {
@@ -61,7 +64,7 @@ if (AUTH0_CLIENT_ID && AUTH0_DOMAIN) {
     Meteor.logout();
   };
 
-  Meteor.lock = Lock;
+  return Lock;
 }
 
-export { Lock };
+export const Lock = initLock();

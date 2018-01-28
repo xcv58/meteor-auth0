@@ -13,6 +13,30 @@
     <div>Your name is: <b>{{currentUser.services.auth0.name}}</b></div>
     <button class="logout">Log Out</button>
   {{else}}
+    <div>
+      <label>
+        Allow Sign Up
+        <input type="checkbox" id="allowSignUp" checked />
+      </label>
+    </div>
+    <div>
+      <label>
+        Closable
+        <input type="checkbox" id="closable" checked />
+      </label>
+    </div>
+    <div>
+      <label>
+        Allow Show Password
+        <input type="checkbox" id="allowShowPassword" />
+      </label>
+    </div>
+    <div>
+      <label>
+        Prefill email:
+        <input type="text" id="email" >
+      </label>
+    </div>
     <button class="login">Log In</button>
   {{/if}}
 </template>
