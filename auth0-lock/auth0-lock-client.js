@@ -36,7 +36,7 @@ export const initLock = (options = {}) => {
     Lock.show({
       flashMessage: {
         type: 'error',
-        text: error.error_description,
+        text: error.errorDescription,
       },
     });
   });
