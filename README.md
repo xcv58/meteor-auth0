@@ -50,12 +50,17 @@ You can call any of the Lock methods on this instance, and pass any of the optio
 For example, you may call from inside a click event handler:
 
 ```js
-Meteor.lock.show();
+import { Lock } from 'meteor/xcv58:auth0-lock';
+Lock.show();
 ```
+
+ You are able to customize the `Lock` instance as well by calling `initLock ` method. You can find example in https://github.com/xcv58/meteor-auth0/blob/master/examples/sample-app/client/main.js.
+
 Any documented combination is valid.
 
 To log out, you can just call `Meteor.logout();` if you just want to log the user out of your app.
-Or you may call `Meteor.lock.logout();` if you want to log the user out of the social provider, for instance, but this will redirect the user outside your app to the social provider log out site.
+
+Or you may call `Lock.logout();` if you want to log the user out of the social provider, for instance, but this will redirect the user outside your app to the social provider log out site.
 
 ## Accessing User Details
 
@@ -68,10 +73,11 @@ You will find the user profile under `currentUser.services.auth0`.
   {{currentUser.services.auth0.name}}
 </template>
 ```
+
 You can access the user profile from the server through the `Meteor.user()` global getter, under the `services.auth0` object.
 
 ```js
-var userName = Meteor.user().services.auth0.name;
+const userName = Meteor.user().services.auth0.name;
 ```
 
 ## Documentation
