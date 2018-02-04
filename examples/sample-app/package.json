@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "deploy": "meteor-now -e MONGO_URL=false -e NODE_ENV=production"
+    "deploy": "meteor-now -e NODE_ENV=production"
   },
   "dependencies": {
     "meteor-node-stubs": "~0.2.0"
