@@ -101,11 +101,9 @@ You can find the full documentation for Lock on the [Auth0 docs site](https://au
 
 ## Example
 
-***TODO, this example is outdated!***
+The **examples/sample-app** directory has a ready-to-go app. In order to run it you need [Meteor](https://www.meteor.com/) installed.
 
-The **example/auth0-meteor-sample** directory has a ready-to-go app. In order to run it you need [Meteor](https://www.meteor.com/) installed.
-
-Then execute `meteor --settings settings.json` from the root of this project.
+Then execute `meteor --settings production.settings.json` from the root of the example.
 
 Finally, point your browser at `http://localhost:3000/` and play around.
 
