@@ -1,6 +1,4 @@
-# Auth0 Meteor
-
-## Lock
+# Lock
 
 [Auth0](https://auth0.com) is an authentication broker that supports social identity providers as well as enterprise identity providers such as Active Directory, LDAP, Google Apps and Salesforce.
 
@@ -20,14 +18,14 @@ Lock makes it easy to integrate SSO in your app. You won't have to worry about:
 
 ## Requirements
 
-You'll need Meteor **1.2.1**.
+You'll need Meteor **1.6.1+**.
 
 ## Install
 
 Lock is available through [Atmosphere](https://atmospherejs.com/). To install it, simply run the following command in your project folder:
 
 ```sh
-meteor add auth0:lock
+meteor add xcv58:auth0-lock
 ```
 
 ## Before Getting Started
@@ -35,11 +33,12 @@ meteor add auth0:lock
 Create a file named `settings.json` in your project folder. This file should have your Auth0 ClientId and Domain that you can get from [our dashboard](https://app.auth0.com/#/applications).
 ```js
 {
-  "private": {
+  "public": {
     "AUTH0_CLIENT_ID": "YOUR_CLIENT_ID",
     "AUTH0_DOMAIN": "YOUR_AUTH0_DOMAIN"
   }
 }
+
 ```
 Please remember to replace the respective values.
 
@@ -51,16 +50,12 @@ You can call any of the Lock methods on this instance, and pass any of the optio
 For example, you may call from inside a click event handler:
 
 ```js
-lock.show();
-// or
-lock.showSignin(function(err, profile, token) { ... });
-// or
-lock.showSignup({...}, function(err, profile, token) { ... });
+Meteor.lock.show();
 ```
 Any documented combination is valid.
 
 To log out, you can just call `Meteor.logout();` if you just want to log the user out of your app.
-Or you may call `lock.logout();` if you want to log the user out of the social provider, for instance, but this will redirect the user outside your app to the social provider log out site.
+Or you may call `Meteor.lock.logout();` if you want to log the user out of the social provider, for instance, but this will redirect the user outside your app to the social provider log out site.
 
 ## Accessing User Details
 
@@ -97,6 +92,8 @@ You can find the full documentation for Lock on the [Auth0 docs site](https://au
 * [Using Refresh Tokens][using-refresh-tokens]
 
 ## Example
+
+***TODO, this example is outdated!***
 
 The **example/auth0-meteor-sample** directory has a ready-to-go app. In order to run it you need [Meteor](https://www.meteor.com/) installed.
 
@@ -145,15 +142,3 @@ This will publish the package, make it available in Atmosphere as well as creati
 [playground-url]: http://auth0.github.com/playground
 [migration-guide]: https://auth0.com/docs/libraries/lock/migration-guide
 [using-refresh-tokens]: https://auth0.com/docs/libraries/lock/using-refresh-tokens
-
-## Issue Reporting
-
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
-
-## Author
-
-[Auth0](auth0.com)
-
-## License
-
-This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
