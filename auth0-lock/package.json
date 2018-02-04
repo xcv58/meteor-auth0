@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "eslint ./ --ext .js",
     "lintfix": "npm run lint -- --fix",
-    "testonly": "meteor test-packages ./",
+    "testonly": "meteor test-packages ./ --settings ../examples/sample-app/production.settings.json",
     "test": "npm run lint && npm run testonly"
   },
   "author": "xcv58",
