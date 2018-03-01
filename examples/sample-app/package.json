@@ -2,7 +2,7 @@
   "name": "sample-app",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor --settings production.settings.json",
     "deploy": "meteor-now -e NODE_ENV=production"
   },
   "dependencies": {

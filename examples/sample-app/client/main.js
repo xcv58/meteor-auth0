@@ -14,6 +14,7 @@ Template.hello.events({
     const Lock = initLock({
       prefill: { email },
       allowSignUp,
+      allowShowPassword,
       closable,
     });
     Lock.show();
