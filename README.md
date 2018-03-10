@@ -52,8 +52,13 @@ You can call any of the Lock methods on this instance, and pass any of the optio
 For example, you may call from inside a click event handler:
 
 ```js
-import { Lock } from 'meteor/xcv58:auth0-lock';
-Lock.show();
+import { Meteor } from 'meteor/meteor';
+import { initLock } from 'meteor/xcv58:auth0-lock';
+Meteor.startup(function () {
+  // This is required to handle login
+  const Lock = initLock();
+  Lock.show();
+})
 ```
 
  You are able to customize the `Lock` instance as well by calling `initLock ` method. You can find example in https://github.com/xcv58/meteor-auth0/blob/master/examples/sample-app/client/main.js.

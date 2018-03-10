@@ -4,6 +4,11 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import './main.html';
 
+Meteor.startup(function () {
+  // This is required to handle login
+  initLock();
+})
+
 Template.hello.events({
   'click .login': function (event, template) {
     event.preventDefault();

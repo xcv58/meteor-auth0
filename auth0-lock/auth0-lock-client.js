@@ -51,5 +51,3 @@ export const initLock = (options = {}) => {
 
   return Lock;
 };
-
-export const Lock = initLock();
